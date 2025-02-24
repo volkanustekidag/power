@@ -1,0 +1,2 @@
+/Users/ogoo/power/example/android/app/.cxx/Debug/3s41494t/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/ogoo/power/example/android/app/.cxx/Debug/3s41494t/armeabi-v7a/CMakeFiles/edit_cache.dir

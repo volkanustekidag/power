@@ -9,31 +9,21 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** PowerPlugin */
-public class PowerPlugin : FlutterPlugin, MethodCallHandler {
+class PowerPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
     private lateinit var applicationContext: Context
 
-    constructor()
-
-    constructor(context: Context) {
-        applicationContext = context
-    }
-
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         applicationContext = flutterPluginBinding.applicationContext
-        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "com.amir_p/power")
-        channel.setMethodCallHandler(this);
+        channel = MethodChannel(flutterPluginBinding.flutterEngine.dartExecutor, "com.amir_p/power")
+        channel.setMethodCallHandler(this)
     }
 
-    companion object {
-        @JvmStatic
-        fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "com.amir_p/power")
-            channel.setMethodCallHandler(PowerPlugin(registrar.context()))
-        }
+    // Flutter 2.x ve sonrası için kayıt işlemi bu şekilde yapılır
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -51,9 +41,5 @@ public class PowerPlugin : FlutterPlugin, MethodCallHandler {
         } else {
             result.notImplemented()
         }
-    }
-
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
     }
 }

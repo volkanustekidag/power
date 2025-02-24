@@ -1,12 +1,13 @@
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.9.25'
+
     repositories {
         google()
-        jcenter()
+        mavenCentral() // jcenter yerine mavenCentral kullan
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:8.1.0' // Gradle sürümünü güncelle
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -14,18 +15,16 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral() // jcenter yerine mavenCentral kullan
     }
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
-subprojects {
-    project.evaluationDependsOn(':app')
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete) {
+    delete rootProject.layout.buildDirectory
 }
